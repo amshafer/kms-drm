@@ -267,6 +267,18 @@ trace_i915_request_add(void *req)
 	CTR1(KTR_DRM, "request_add req %p", req);
 }
 
+static inline void
+trace_intel_pipe_enable(struct drm_i915_private *priv, enum pipe pipe)
+{
+	CTR2(KTR_DRM, "pipe_enable private %p pipe %d", priv, pipe);
+}
+
+static inline void
+trace_intel_pipe_disable(struct drm_i915_private *priv, enum pipe pipe)
+{
+	CTR2(KTR_DRM, "pipe_disable private %p pipe %d", priv, pipe);
+}
+
 #define trace_i915_gem_ring_sync_to(to_req, from) \
 CTR2(KTR_DRM, "gem_ring_sync_to  to_req %p from %p", to_req, from);
 

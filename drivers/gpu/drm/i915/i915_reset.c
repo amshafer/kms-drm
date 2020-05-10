@@ -658,10 +658,12 @@ static void revoke_mmaps(struct drm_i915_private *i915)
 		GEM_BUG_ON(vma->fence != &i915->fence_regs[i]);
 		node = &vma->obj->base.vma_node;
 		vma_offset = vma->ggtt_view.partial.offset << PAGE_SHIFT;
+#ifdef __linux__
 		unmap_mapping_range(i915->drm.anon_inode->i_mapping,
 				    drm_vma_node_offset_addr(node) + vma_offset,
 				    vma->size,
 				    1);
+#endif
 	}
 }
 

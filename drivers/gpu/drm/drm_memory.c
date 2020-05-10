@@ -35,7 +35,11 @@
 
 #include <linux/highmem.h>
 #include <linux/export.h>
+#ifdef __linux__
 #include <xen/xen.h>
+#else
+#include <xen/xen-os.h>
+#endif
 #include <drm/drmP.h>
 #include "drm_legacy.h"
 

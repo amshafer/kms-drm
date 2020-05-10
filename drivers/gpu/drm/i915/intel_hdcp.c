@@ -746,6 +746,9 @@ struct intel_connector *intel_hdcp_to_connector(struct intel_hdcp *hdcp)
 }
 
 /* Implements Part 3 of the HDCP authorization procedure */
+#ifndef __linux__
+static
+#endif
 int intel_hdcp_check_link(struct intel_connector *connector)
 {
 	struct intel_hdcp *hdcp = &connector->hdcp;
@@ -1200,7 +1203,9 @@ static bool is_hdcp2_supported(struct drm_i915_private *dev_priv)
 
 void intel_hdcp_component_init(struct drm_i915_private *dev_priv)
 {
+#ifdef __linux__
 	int ret;
+#endif
 
 	if (!is_hdcp2_supported(dev_priv))
 		return;
@@ -1210,6 +1215,7 @@ void intel_hdcp_component_init(struct drm_i915_private *dev_priv)
 
 	dev_priv->hdcp_comp_added = true;
 	mutex_unlock(&dev_priv->hdcp_comp_mutex);
+#ifdef __linux__
 	ret = component_add_typed(dev_priv->drm.dev, &i915_hdcp_component_ops,
 				  I915_COMPONENT_HDCP);
 	if (ret < 0) {
@@ -1219,6 +1225,7 @@ void intel_hdcp_component_init(struct drm_i915_private *dev_priv)
 		mutex_unlock(&dev_priv->hdcp_comp_mutex);
 		return;
 	}
+#endif
 }
 
 static void intel_hdcp2_init(struct intel_connector *connector)
