@@ -136,6 +136,9 @@ static inline uint64_t mul_u64_u32_div(uint64_t a, uint32_t mul, uint32_t diviso
 /* Naive impl... */
 #define	array_size(a,b) ((a) * (b))
 
+#define check_add_overflow(a, b, c) __builtin_add_overflow(a, b, c)
+#define check_mul_overflow(a, b, c) __builtin_mul_overflow(a, b, c)
+
 #define struct_size(p, member, n)			\
 	((n) * sizeof(*(p)->member) + sizeof(*(p)))
 
